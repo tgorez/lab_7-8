@@ -69,7 +69,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         if (state is AuthSuccess) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) =>  UserInfoPage(name: nameController.text, email: emailController.text, phone: phoneController.text ))
+            MaterialPageRoute(builder: (_) => UserInfoPage(email: emailController.text, name: nameController.text, phone: phoneController.text,))
           );
         } else if (state is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -106,9 +106,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "name_empty".tr();
-                    }
+                    if (value == null || value.isEmpty) return "name_empty".tr();
                     return null;
                   },
                 ),
@@ -121,12 +119,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "email_empty".tr();
-                    }
-                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                      return "email_invalid".tr();
-                    }
+                    if (value == null || value.isEmpty) return "email_empty".tr();
+                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) return "email_invalid".tr();
                     return null;
                   },
                 ),
@@ -140,12 +134,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "phone_empty".tr();
-                    }
-                    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                      return "phone_invalid".tr();
-                    }
+                    if (value == null || value.isEmpty) return "phone_empty".tr();
+                    if (!RegExp(r'^[0-9]+$').hasMatch(value)) return "phone_invalid".tr();
                     return null;
                   },
                 ),
@@ -162,19 +152,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         obscurePassword ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                        });
+                        setState(() => obscurePassword = !obscurePassword);
                       },
                     ),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "password_empty".tr();
-                    }
-                    if (value.length < 6) {
-                      return "password_short".tr();
-                    }
+                    if (value == null || value.isEmpty) return "password_empty".tr();
+                    if (value.length < 6) return "password_short".tr();
                     return null;
                   },
                 ),
@@ -191,25 +175,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        setState(() {
-                          obscureConfirmPassword = !obscureConfirmPassword;
-                        });
+                        setState(() => obscureConfirmPassword = !obscureConfirmPassword);
                       },
                     ),
                   ),
                   validator: (value) {
-                    if (value != passwordController.text) {
-                      return "password_mismatch".tr();
-                    }
+                    if (value != passwordController.text) return "password_mismatch".tr();
                     return null;
                   },
                 ),
                 const SizedBox(height: 25),
                 BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
-                    if (state is AuthLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+                    if (state is AuthLoading) return const Center(child: CircularProgressIndicator());
                     return ElevatedButton(
                       onPressed: submitForm,
                       child: Text("register".tr()),

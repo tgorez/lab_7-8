@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home/registration_page.dart';
+import 'constant/colors.dart';
+import 'constant/text_styles_value.dart';
 import 'auth/bloc/auth_bloc.dart';
 
 void main() async {
@@ -32,12 +34,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Registration App",
       locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
-      home: RegisterPage(),
+      theme: ThemeData(
+        primaryColor: AppColors.secondary,
+        textTheme: TextTheme(
+          bodyMedium: AppTextStyles.px10blue,
+        ),
+      ),
+      home: const RegistrationPage(),
     );
   }
-  
-  RegisterPage() {}
 }
